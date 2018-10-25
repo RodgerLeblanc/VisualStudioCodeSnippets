@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Define IDisposable implementation</Title>
+            <Shortcut>dispose</Shortcut>
+            <Description>Code snippet for IDisposable implementation</Description>
+            <Author>Roger Leblanc</Author>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Code Language="csharp">
+                <![CDATA[#region IDisposable implementation
+private bool disposed = false;
+
+/// <summary>
+/// Public implementation of Dispose pattern callable by consumers.
+/// </summary>
+public void Dispose()
+{
+    Dispose(true);
+    GC.SuppressFinalize(this);
+}
+
+/// <summary>
+/// Protected implementation of Dispose pattern.
+/// </summary>
+/// <param name="disposing"></param>
+protected virtual void Dispose(bool disposing)
+{
+    if (disposed)
+        return;
+
+    if (disposing)
+    {
+        // Free any other managed objects here. 
+    }
+
+    // Free any unmanaged objects here. 
+    disposed = true;
+}
+#endregion$end$]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>

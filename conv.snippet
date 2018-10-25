@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Define IValueConverter and MarkupExtension implementation</Title>
+            <Shortcut>conv</Shortcut>
+            <Description>Code snippet for IValueConverter and MarkupExtension implementation</Description>
+            <Author>Roger Leblanc</Author>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Declarations>
+                <Literal>
+                    <ID>sourceType</ID>
+                    <ToolTip>Source Property Type</ToolTip>
+                    <Default>object</Default>
+                </Literal>
+                <Literal>
+                    <ID>targetType</ID>
+                    <ToolTip>Target Property Type</ToolTip>
+                    <Default>object</Default>
+                </Literal>
+                <Literal>
+                    <ID>converterName</ID>
+                    <ToolTip>Converter Name</ToolTip>
+                    <Default>SomethingToOtherThing</Default>
+                </Literal>
+                <Literal>
+                    <ID>property</ID>
+                    <ToolTip>Property Name</ToolTip>
+                    <Default>MyProperty</Default>
+                </Literal>
+                <Literal Editable="false">
+                    <ID>ownerclass</ID>
+                    <ToolTip>The owning class of this Property.  Typically the class that it is declared in.</ToolTip>
+                    <Function>ClassName()</Function>   
+                    <Default>ClassNamePlaceholder</Default>
+                </Literal>
+                <Literal>
+                    <ID>defaultvalue</ID>
+                    <ToolTip>The default value for this property.</ToolTip>
+                    <Default>null</Default>
+                </Literal>
+                <Literal>
+                    <ID>objectType</ID>
+                    <ToolTip>The object that this attached property can attach to.</ToolTip>
+                    <Default>DependencyObject</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="csharp">
+                <![CDATA[using System;
+using System.Globalization;
+using System.Windows.Data;
+using System.Windows.Markup;
+
+/// <summary>
+/// $converterName$Converter
+/// </summary>
+public class $converterName$Converter : MarkupExtension, IValueConverter
+{
+    /// <summary>
+    /// Convert from $sourceType$ to $targetType$.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (!(value is $sourceType$ source))
+            return Binding.DoNothing;
+
+        return source as $targetType$;
+    }
+
+    /// <summary>
+    /// Convert from $targetType$ to $sourceType$.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (!(value is $targetType$ source))
+            return Binding.DoNothing;
+
+        return source as $sourceType$;
+    }
+
+    /// <summary>
+    /// Returns an object that is provided as the value of the target property for this markup extension.
+    /// </summary>
+    /// <param name="serviceProvider"></param>
+    /// <returns></returns>
+    public override object ProvideValue(IServiceProvider serviceProvider)
+    {
+        return this;
+    }
+}$end$]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>

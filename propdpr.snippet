@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Define a read-only DependencyProperty</Title>
+            <Shortcut>propdpr</Shortcut>
+            <Description>Code snippet for a read-only DependencyProperty</Description>
+            <Author>Roger Leblanc</Author>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Declarations>
+                <Literal>
+                    <ID>type</ID>
+                    <ToolTip>Property Type</ToolTip>
+                    <Default>object</Default>
+                </Literal>
+                <Literal>
+                    <ID>property</ID>
+                    <ToolTip>Property Name</ToolTip>
+                    <Default>MyProperty</Default>
+                </Literal>
+                <Literal Editable="false">
+                    <ID>ownerclass</ID>
+                    <ToolTip>The owning class of this Property.  Typically the class that it is declared in.</ToolTip>
+                    <Function>ClassName()</Function>   
+                    <Default>ClassNamePlaceholder</Default>
+                </Literal>
+                <Literal>
+                    <ID>defaultvalue</ID>
+                    <ToolTip>The default value for this property.</ToolTip>
+                    <Default>null</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="csharp">
+                <![CDATA[#region $property$
+/// <summary>
+/// Private key for $property$ dependency property.
+/// </summary>
+private static readonly DependencyPropertyKey $property$Key =
+    DependencyProperty.RegisterReadOnly(nameof($property$), typeof($type$), typeof($ownerclass$), new PropertyMetadata($defaultvalue$));
+
+/// <summary>
+/// $property$ read-only dependency property.
+/// </summary>
+public static readonly DependencyProperty $property$Property =
+    $property$Key.DependencyProperty;
+
+/// <summary>
+/// Gets the value for $property$. This is a read-only dependency property.
+/// </summary>
+public $type$ $property$
+{
+    get { return ($type$)GetValue($property$Property); }
+    protected set { SetValue($property$Key, value); }
+}
+#endregion$end$]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
