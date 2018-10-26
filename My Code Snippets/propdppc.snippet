@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Define a DependencyProperty with property changed callback</Title>
+            <Shortcut>propdppc</Shortcut>
+            <Description>Code snippet for a property using DependencyProperty as the backing store</Description>
+            <Author>Roger Leblanc</Author>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Declarations>
+                <Literal>
+                    <ID>type</ID>
+                    <ToolTip>Property Type</ToolTip>
+                    <Default>object</Default>
+                </Literal>
+                <Literal>
+                    <ID>property</ID>
+                    <ToolTip>Property Name</ToolTip>
+                    <Default>MyProperty</Default>
+                </Literal>
+                <Literal Editable="false">
+                    <ID>ownerclass</ID>
+                    <ToolTip>The owning class of this Property.  Typically the class that it is declared in.</ToolTip>
+                    <Function>ClassName()</Function>   
+                    <Default>ClassNamePlaceholder</Default>
+                </Literal>
+                <Literal>
+                    <ID>defaultvalue</ID>
+                    <ToolTip>The default value for this property.</ToolTip>
+                    <Default>null</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="csharp">
+                <![CDATA[#region $property$
+/// <summary>
+/// Gets or sets the value for $property$. This is a dependency property.
+/// </summary>
+public static readonly DependencyProperty $property$Property = 
+    DependencyProperty.Register(nameof($property$), typeof($type$), typeof($ownerclass$), new PropertyMetadata($defaultvalue$, On$property$Changed));
+
+/// <summary>
+/// $property$ property changed static callback
+/// </summary>
+/// <param name="d"></param>
+/// <param name="e"></param>
+private static void On$property$Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
+{
+    if (!(d is $ownerclass$ source))
+        return;
+
+    source.On$property$Changed(($type$)e.OldValue, ($type$)e.NewValue);
+}
+
+/// <summary>
+/// $property$ property changed callback
+/// </summary>
+/// <param name="oldValue"></param>
+/// <param name="newValue"></param>
+protected virtual void On$property$Changed($type$ oldValue, $type$ newValue)
+{
+}
+
+/// <summary>
+/// $property$ dependency property.
+/// </summary>
+public $type$ $property$
+{
+    get { return ($type$)GetValue($property$Property); }
+    set { SetValue($property$Property, value); }
+}
+#endregion$end$]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
