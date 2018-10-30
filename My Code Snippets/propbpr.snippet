@@ -2,9 +2,9 @@
 <CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
     <CodeSnippet Format="1.0.0">
         <Header>
-            <Title>Define a DependencyProperty</Title>
-            <Shortcut>propdp</Shortcut>
-            <Description>Code snippet for a property using DependencyProperty as the backing store</Description>
+            <Title>Define a read-only BindableProperty</Title>
+            <Shortcut>propbpr</Shortcut>
+            <Description>Code snippet for a read-only BindableProperty</Description>
             <Author>Roger Leblanc</Author>
             <SnippetTypes>
                 <SnippetType>Expansion</SnippetType>
@@ -37,18 +37,24 @@
             <Code Language="csharp">
                 <![CDATA[#region $property$
 /// <summary>
-/// $property$ dependency property.
+/// Private key for $property$ bindable property.
 /// </summary>
-public static readonly DependencyProperty $property$Property = 
-    DependencyProperty.Register(nameof($property$), typeof($type$), typeof($ownerclass$), new PropertyMetadata($defaultvalue$));
+public static readonly BindableProperty $property$PropertyKey =
+    BindableProperty.CreateReadOnly(nameof($property$), typeof($type$), typeof($ownerclass$), null);
 
 /// <summary>
-/// Gets or sets the value for $property$. This is a dependency property.
+/// $property$ read-only bindable property.
+/// </summary>
+public static readonly BindableProperty $property$Property =
+    $property$PropertyKey.BindableProperty;
+
+/// <summary>
+/// Gets or sets the value for $property$. This is a read-only bindable property.
 /// </summary>
 public $type$ $property$
 {
     get { return ($type$)GetValue($property$Property); }
-    set { SetValue($property$Property, value); }
+    set { SetValue($property$PropertyKey, value); }
 }
 #endregion$end$]]>
             </Code>
