@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Define a SetBinding call with a Bindables DependencyProperty</Title>
+            <Shortcut>setbindingb</Shortcut>
+            <Description>Code snippet for a SetBinding call with a Bindables DependencyProperty</Description>
+            <Author>Roger Leblanc</Author>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Declarations>
+                <Literal>
+                    <ID>controlName</ID>
+                    <ToolTip>Control name</ToolTip>
+                    <Default>myControl</Default>
+                </Literal>
+                <Literal>
+                    <ID>dpOwnerType</ID>
+                    <ToolTip>Dependency Property owner Type</ToolTip>
+                    <Default>DpClassType</Default>
+                </Literal>
+                <Literal>
+                    <ID>dp</ID>
+                    <ToolTip>Dependency Property Name</ToolTip>
+                    <Default>DpName</Default>
+                </Literal>
+                <Literal>
+                    <ID>boundToProperty</ID>
+                    <ToolTip>Bound to property</ToolTip>
+                    <Default>BoundToProperty</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="csharp">
+                <![CDATA[$controlName$.SetBinding(nameof($dpOwnerType$.$dp$), typeof($dpOwnerType$), new Binding(nameof($boundToProperty$)) { Source = this });$end$]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
