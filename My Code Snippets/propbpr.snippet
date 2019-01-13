@@ -35,28 +35,17 @@
                 </Literal>
             </Declarations>
             <Code Language="csharp">
-                <![CDATA[#region $property$
-/// <summary>
-/// Private key for $property$ bindable property.
-/// </summary>
-public static readonly BindablePropertyKey $property$PropertyKey =
+                <![CDATA[public static readonly BindablePropertyKey $property$PropertyKey =
     BindableProperty.CreateReadOnly(nameof($property$), typeof($type$), typeof($ownerclass$), $defaultvalue$);
 
-/// <summary>
-/// $property$ read-only bindable property.
-/// </summary>
 public static readonly BindableProperty $property$Property =
     $property$PropertyKey.BindableProperty;
 
-/// <summary>
-/// Gets or sets the value for $property$. This is a read-only bindable property.
-/// </summary>
 public $type$ $property$
 {
     get { return ($type$)GetValue($property$Property); }
     set { SetValue($property$PropertyKey, value); }
-}
-#endregion$end$]]>
+}$end$]]>
             </Code>
         </Snippet>
     </CodeSnippet>

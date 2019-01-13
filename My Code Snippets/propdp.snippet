@@ -35,15 +35,9 @@
                 </Literal>
             </Declarations>
             <Code Language="csharp">
-                <![CDATA[/// <summary>
-/// $property$ dependency property.
-/// </summary>
-public static readonly DependencyProperty $property$Property = 
+                <![CDATA[public static readonly DependencyProperty $property$Property = 
     DependencyProperty.Register(nameof($property$), typeof($type$), typeof($ownerclass$), new PropertyMetadata($defaultvalue$));
 
-/// <summary>
-/// Gets or sets the value for $property$. This is a dependency property.
-/// </summary>
 public $type$ $property$
 {
     get { return ($type$)GetValue($property$Property); }

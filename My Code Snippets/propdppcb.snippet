@@ -35,17 +35,9 @@
                 </Literal>
             </Declarations>
             <Code Language="csharp">
-                <![CDATA[/// <summary>
-/// $property$. This is a dependency property.
-/// </summary>
-[DependencyProperty(OnPropertyChanged = nameof(On$property$Changed))]
+                <![CDATA[[DependencyProperty(OnPropertyChanged = nameof(On$property$Changed))]
 public $type$ $property$ { get; set; }
 
-/// <summary>
-/// $property$ property changed static callback
-/// </summary>
-/// <param name="d"></param>
-/// <param name="e"></param>
 private static void On$property$Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
 {
     if (!(d is $ownerclass$ source))
@@ -54,11 +46,6 @@ private static void On$property$Changed(DependencyObject d, DependencyPropertyCh
     source.On$property$Changed(($type$)e.OldValue, ($type$)e.NewValue);
 }
 
-/// <summary>
-/// $property$ property changed callback
-/// </summary>
-/// <param name="oldValue"></param>
-/// <param name="newValue"></param>
 protected virtual void On$property$Changed($type$ oldValue, $type$ newValue)
 {
 }$end$]]>
