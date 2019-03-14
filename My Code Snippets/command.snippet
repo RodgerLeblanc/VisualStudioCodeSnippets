@@ -23,10 +23,23 @@
 					<Default>MyProperty</Default>
 				</Literal>
 			</Declarations>
-			<Code Language="csharp"><![CDATA[public class WPFCommand : IWPFCommand
+			<Code Language="csharp"><![CDATA[using System;
+    using System.Windows.Input;
+
+    public class WPFCommand : IWPFCommand
     {
         private Action<object> _execute;
         private Func<object, bool> _canExecute;
+
+        public WPFCommand(Action execute) :
+            this(execute, () => true)
+        {
+        }
+
+        public WPFCommand(Action<object> execute) :
+            this(execute, o => true)
+        {
+        }
 
         public WPFCommand(Action execute, Func<bool> canExecute) :
             this(o => execute?.Invoke(), o => canExecute?.Invoke() ?? true)
@@ -54,12 +67,22 @@
         }
     }
 
-    public interface IWPFCommand : System.Windows.Input.ICommand
+    public interface IWPFCommand : ICommand
     {
     }
 
     public class CommandFactory
     {
+        public static IWPFCommand Create(Action execute)
+        {
+            return new WPFCommand(execute);
+        }
+
+        public static IWPFCommand Create(Action<object> execute)
+        {
+            return new WPFCommand(execute);
+        }
+
         public static IWPFCommand Create(Action execute, Func<bool> canExecute)
         {
             return new WPFCommand(execute, canExecute);
