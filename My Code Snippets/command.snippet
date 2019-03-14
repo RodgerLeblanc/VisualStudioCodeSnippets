@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Define a WPFCommand class</Title>
+			<Shortcut>command</Shortcut>
+			<Description>Code snippet for a WPFCommand class</Description>
+			<Author>Roger Leblanc</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>type</ID>
+					<ToolTip>Property type</ToolTip>
+					<Default>object</Default>
+				</Literal>
+				<Literal>
+					<ID>property</ID>
+					<ToolTip>Property name</ToolTip>
+					<Default>MyProperty</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="csharp"><![CDATA[public class WPFCommand : IWPFCommand
+    {
+        private Action<object> _execute;
+        private Func<object, bool> _canExecute;
+
+        public WPFCommand(Action execute, Func<bool> canExecute) :
+            this(o => execute?.Invoke(), o => canExecute?.Invoke() ?? true)
+        {
+        }
+
+        public WPFCommand(Action<object> execute, Func<object, bool> canExecute)
+        {
+            _execute = execute;
+            _canExecute = canExecute;
+        }
+
+#pragma warning disable CS0067
+        public event EventHandler CanExecuteChanged;
+#pragma warning restore CS0067
+
+        public bool CanExecute(object parameter)
+        {
+            return _canExecute?.Invoke(parameter) ?? true;
+        }
+
+        public void Execute(object parameter)
+        {
+            _execute?.Invoke(parameter);
+        }
+    }
+
+    public interface IWPFCommand : System.Windows.Input.ICommand
+    {
+    }
+
+    public class CommandFactory
+    {
+        public static IWPFCommand Create(Action execute, Func<bool> canExecute)
+        {
+            return new WPFCommand(execute, canExecute);
+        }
+
+        public static IWPFCommand Create(Action<object> execute, Func<object, bool> canExecute)
+        {
+            return new WPFCommand(execute, canExecute);
+        }
+    }$end$]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
