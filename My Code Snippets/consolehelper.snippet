@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Define a ConsoleHelper class</Title>
+			<Shortcut>consolehelper</Shortcut>
+			<Description>Code snippet for a ConsoleHelper class</Description>
+			<Author>Roger Leblanc</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>type</ID>
+					<ToolTip>Property type</ToolTip>
+					<Default>object</Default>
+				</Literal>
+				<Literal>
+					<ID>property</ID>
+					<ToolTip>Property name</ToolTip>
+					<Default>MyProperty</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="csharp"><![CDATA[using System;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+
+    public static class ConsoleHelper
+    {
+        public static void WriteLine(string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = Int32.MinValue, [CallerMemberName] string caller = "")
+        {
+            DateTime now = DateTime.Now;
+            Console.WriteLine($$"{filePath.Split('\\').Last()} #{lineNumber} - {caller}() : {message}");
+        }
+    }$end$]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
