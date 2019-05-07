@@ -65,10 +65,16 @@
         {
             _execute?.Invoke(parameter);
         }
+
+        public void RaiseCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public interface IWPFCommand : ICommand
     {
+        void RaiseCanExecuteChanged();
     }
 
     public class CommandFactory

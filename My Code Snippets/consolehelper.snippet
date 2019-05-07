@@ -33,7 +33,7 @@
 
         public static void WriteLine(string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = Int32.MinValue, [CallerMemberName] string caller = "")
         {
-            Console.WriteLine($"{DateTime.Now.ToString(DateTimeFormat)} {filePath.Split('\\').Last()} #{lineNumber} - {caller}() : {message}");
+            Console.WriteLine($$"{DateTime.Now.ToString(DateTimeFormat)} {filePath.Split('\\').Last()} #{lineNumber} - {caller}() : {message}");
         }
     }$end$]]>
 			</Code>
