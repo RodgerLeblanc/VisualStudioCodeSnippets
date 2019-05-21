@@ -2,9 +2,9 @@
 <CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
     <CodeSnippet Format="1.0.0">
         <Header>
-            <Title>Define a DependencyProperty with Bindables.DependencyPropertyAttribute</Title>
-            <Shortcut>propdpb</Shortcut>
-            <Description>Code snippet for a property using DependencyProperty as the backing store</Description>
+            <Title>Define a read-only DependencyProperty with Bindables.DependencyPropertyAttribute</Title>
+            <Shortcut>propdprb</Shortcut>
+            <Description>Code snippet for a read-only property using DependencyProperty as the backing store</Description>
             <Author>Roger Leblanc</Author>
             <SnippetTypes>
                 <SnippetType>Expansion</SnippetType>
@@ -25,10 +25,10 @@
             </Declarations>
             <Code Language="csharp">
                 <![CDATA[/// <summary>
-/// Gets or sets the value for $property$. This is a dependency property.
+/// Gets the value for $property$. This is a read-only dependency property.
 /// </summary>
-[DependencyProperty]
-public $type$ $property$ { get; set; }$end$]]>
+[DependencyProperty(IsReadOnly = true)]
+public $type$ $property$ { get; private set; }$end$]]>
             </Code>
         </Snippet>
     </CodeSnippet>
