@@ -13,7 +13,7 @@
         <Snippet>
             <Code Language="csharp">
                 <![CDATA[#region IDisposable implementation
-private bool disposed = false;
+private bool _disposed = false;
 
 /// <summary>
 /// Public implementation of Dispose pattern callable by consumers.
@@ -30,7 +30,7 @@ public void Dispose()
 /// <param name="disposing"></param>
 protected virtual void Dispose(bool disposing)
 {
-    if (disposed)
+    if (_disposed)
         return;
 
     if (disposing)
@@ -39,7 +39,7 @@ protected virtual void Dispose(bool disposing)
     }
 
     // Free any unmanaged objects here. 
-    disposed = true;
+    _disposed = true;
 }
 #endregion$end$]]>
             </Code>
