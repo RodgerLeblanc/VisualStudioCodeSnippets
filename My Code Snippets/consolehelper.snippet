@@ -26,7 +26,7 @@
 
         public static void WriteLine(string message, [CallerLineNumber] int lineNumber = Int32.MinValue, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
         {
-            Console.WriteLine($"{DateTime.Now.ToString(DateTimeFormat)} {filePath.Split('\\').Last()} #{lineNumber} - {caller}() : {message}");
+            Console.WriteLine($$"{DateTime.Now.ToString(DateTimeFormat)} {filePath.Split('\\').Last()} #{lineNumber} - {caller}() : {message}");
         }
     }$end$]]>
 			</Code>
