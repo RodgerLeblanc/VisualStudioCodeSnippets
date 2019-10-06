@@ -11,18 +11,6 @@
 			</SnippetTypes>
 		</Header>
 		<Snippet>
-			<Declarations>
-				<Literal>
-					<ID>type</ID>
-					<ToolTip>Property type</ToolTip>
-					<Default>object</Default>
-				</Literal>
-				<Literal>
-					<ID>property</ID>
-					<ToolTip>Property name</ToolTip>
-					<Default>MyProperty</Default>
-				</Literal>
-			</Declarations>
 			<Code Language="csharp"><![CDATA[using System;
     using System.Linq;
     using System.Runtime.CompilerServices;
@@ -31,9 +19,14 @@
     {
         public static string DateTimeFormat { get; set; } = "hh:mm:ss.fff";
 
-        public static void WriteLine(string message, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = Int32.MinValue, [CallerMemberName] string caller = "")
+        public static void WriteLine([CallerLineNumber] int lineNumber = Int32.MinValue, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
         {
-            Console.WriteLine($$"{DateTime.Now.ToString(DateTimeFormat)} {filePath.Split('\\').Last()} #{lineNumber} - {caller}() : {message}");
+            WriteLine(String.Empty, lineNumber, filePath, caller);
+        }
+
+        public static void WriteLine(string message, [CallerLineNumber] int lineNumber = Int32.MinValue, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            Console.WriteLine($"{DateTime.Now.ToString(DateTimeFormat)} {filePath.Split('\\').Last()} #{lineNumber} - {caller}() : {message}");
         }
     }$end$]]>
 			</Code>
