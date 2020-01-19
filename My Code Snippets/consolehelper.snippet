@@ -11,24 +11,46 @@
 			</SnippetTypes>
 		</Header>
 		<Snippet>
-			<Code Language="csharp"><![CDATA[using System;
-    using System.Linq;
+			<Code Language="csharp"><![CDATA[namespace ConsoleHelpers
+{
+    using System;
+    using System.IO;
     using System.Runtime.CompilerServices;
 
+    /// <summary>
+    /// Console helper.
+    /// </summary>
     public static class ConsoleHelper
     {
+        /// <summary>
+        /// DateTime format.
+        /// </summary>
         public static string DateTimeFormat { get; set; } = "hh:mm:ss.fff";
 
+        /// <summary>
+        /// Writes the specified string value, followed by the current line terminator, to the standard output stream.
+        /// </summary>
+        /// <param name="lineNumber"></param>
+        /// <param name="filePath"></param>
+        /// <param name="caller"></param>
         public static void WriteLine([CallerLineNumber] int lineNumber = Int32.MinValue, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
         {
             WriteLine(String.Empty, lineNumber, filePath, caller);
         }
 
+        /// <summary>
+        /// Writes the specified string value, followed by the current line terminator, to the standard output stream.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="lineNumber"></param>
+        /// <param name="filePath"></param>
+        /// <param name="caller"></param>
         public static void WriteLine(string message, [CallerLineNumber] int lineNumber = Int32.MinValue, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
         {
-            Console.WriteLine($$"{DateTime.Now.ToString(DateTimeFormat)} {filePath.Split('\\').Last()} #{lineNumber} - {caller}() : {message}");
+            Console.WriteLine($$"{DateTime.Now.ToString(DateTimeFormat)} {Path.GetFileName(filePath)} #{lineNumber} - {caller}() : {message}");
         }
-    }$end$]]>
+    }
+}$end$]]>
 			</Code>
 		</Snippet>
 	</CodeSnippet>
