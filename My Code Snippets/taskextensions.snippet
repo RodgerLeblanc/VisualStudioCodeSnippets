@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Define a TaskExtensions class</Title>
+			<Shortcut>taskextensions</Shortcut>
+			<Description>Code snippet for a TaskExtensions class</Description>
+			<Author>Roger Leblanc</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Code Language="csharp"><![CDATA[//Uncomment this if using ConsoleHelper
+//#define USE_CONSOLEHELPER
+
+namespace TaskExtensions
+{
+#if USE_CONSOLEHELPER
+    using ConsoleHelpers;
+#else
+    using System;
+#endif
+    using System.Diagnostics;
+    using System.Runtime.CompilerServices;
+    using System.Threading.Tasks;
+    using System.Windows;
+
+    /// <summary>
+    /// TaskExtensions
+    /// </summary>
+    public static class TaskExtensions
+    {
+        /// <summary>
+        /// Prints to console the execution time for a task.
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="lineNumber"></param>
+        /// <param name="filePath"></param>
+        /// <param name="caller"></param>
+        /// <returns></returns>
+        public static Task LogExecutionTime(this Task task, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            return task.ContinueWith(async t =>
+            {
+                await t;
+
+                stopwatch.Stop();
+#if USE_CONSOLEHELPER
+                ConsoleHelper.WriteLine($$"{stopwatch.ElapsedMilliseconds} ms", lineNumber, filePath, caller);
+#else
+                Console.WriteLine($$"{stopwatch.ElapsedMilliseconds} ms");
+#endif
+            });
+        }
+
+        /// <summary>
+        /// Prints to console the execution time for a task.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="task"></param>
+        /// <param name="lineNumber"></param>
+        /// <param name="filePath"></param>
+        /// <param name="caller"></param>
+        /// <returns></returns>
+        public static Task<T> LogExecutionTime<T>(this Task<T> task, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            return task.ContinueWith(async t =>
+            {
+                T result = await t;
+
+                stopwatch.Stop();
+#if USE_CONSOLEHELPER
+                ConsoleHelper.WriteLine($$"{stopwatch.ElapsedMilliseconds} ms", lineNumber, filePath, caller);
+#else
+                Console.WriteLine($$"{stopwatch.ElapsedMilliseconds} ms");
+#endif
+
+                return result;
+            }).Unwrap();
+        }
+
+        /// <summary>
+        /// Prints to console the execution time of a <see cref="FrameworkElement"/> <see cref="FrameworkElement.Initialized"/> event.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="lineNumber"></param>
+        /// <param name="filePath"></param>
+        /// <param name="caller"></param>
+        public static void LogInitializedTime(this FrameworkElement element, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            if (element.IsInitialized)
+            {
+#if USE_CONSOLEHELPER
+                ConsoleHelper.WriteLine($$"Already initialized", lineNumber, filePath, caller);
+#else
+                Console.WriteLine("Already initialized");
+#endif
+                return;
+            }
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            element.Initialized += (s, e) =>
+            {
+                stopwatch.Stop();
+#if USE_CONSOLEHELPER
+                ConsoleHelper.WriteLine($$"Initialized: {stopwatch.ElapsedMilliseconds} ms", lineNumber, filePath, caller);
+#else
+                Console.WriteLine($$"Initialized: {stopwatch.ElapsedMilliseconds} ms");
+#endif
+            };
+        }
+
+        /// <summary>
+        /// Prints to console the execution time of a <see cref="FrameworkElement"/> <see cref="FrameworkElement.Loaded"/> event.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="lineNumber"></param>
+        /// <param name="filePath"></param>
+        /// <param name="caller"></param>
+        public static void LogLoadedTime(this FrameworkElement element, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            if (element.IsLoaded)
+            {
+#if USE_CONSOLEHELPER
+                ConsoleHelper.WriteLine("Already loaded", lineNumber, filePath, caller);
+#else
+                Console.WriteLine("Already loaded");
+#endif
+                return;
+            }
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            element.Loaded += (s, e) =>
+            {
+                stopwatch.Stop();
+#if USE_CONSOLEHELPER
+                ConsoleHelper.WriteLine($$"Loaded: {stopwatch.ElapsedMilliseconds} ms", lineNumber, filePath, caller);
+#else
+                Console.WriteLine($$"Loaded: {stopwatch.ElapsedMilliseconds} ms");
+#endif
+            };
+        }
+    }
+}
+$end$]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
