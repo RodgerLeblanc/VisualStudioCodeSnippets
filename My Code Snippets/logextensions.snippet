@@ -2,9 +2,9 @@
 <CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
 	<CodeSnippet Format="1.0.0">
 		<Header>
-			<Title>Define a TaskExtensions class</Title>
-			<Shortcut>taskextensions</Shortcut>
-			<Description>Code snippet for a TaskExtensions class</Description>
+			<Title>Define a LogExtensions class</Title>
+			<Shortcut>logextensions</Shortcut>
+			<Description>Code snippet for a LogExtensions class</Description>
 			<Author>Roger Leblanc</Author>
 			<SnippetTypes>
 				<SnippetType>Expansion</SnippetType>
@@ -14,7 +14,7 @@
 			<Code Language="csharp"><![CDATA[//Uncomment this if using ConsoleHelper
 //#define USE_CONSOLEHELPER
 
-namespace TaskExtensions
+namespace LogExtensions
 {
 #if USE_CONSOLEHELPER
     using ConsoleHelpers;
@@ -27,9 +27,9 @@ namespace TaskExtensions
     using System.Windows;
 
     /// <summary>
-    /// TaskExtensions
+    /// LogExtensions
     /// </summary>
-    public static class TaskExtensions
+    public static class LogExtensions
     {
         /// <summary>
         /// Prints to console the execution time for a task.
