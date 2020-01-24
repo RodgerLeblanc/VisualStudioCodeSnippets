@@ -14,12 +14,12 @@
 			<Code Language="csharp"><![CDATA[//Uncomment this if using ConsoleHelper
 //#define USE_CONSOLEHELPER
 
+using System;
+
 namespace LogExtensions
 {
 #if USE_CONSOLEHELPER
     using ConsoleHelpers;
-#else
-    using System;
 #endif
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
@@ -41,6 +41,20 @@ namespace LogExtensions
         /// <returns></returns>
         public static Task LogExecutionTime(this Task task, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
         {
+            return LogExecutionTime(task, String.Empty, lineNumber, filePath, caller);
+        }
+
+        /// <summary>
+        /// Prints to console the execution time for a task.
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="message"></param>
+        /// <param name="lineNumber"></param>
+        /// <param name="filePath"></param>
+        /// <param name="caller"></param>
+        /// <returns></returns>
+        public static Task LogExecutionTime(this Task task, string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -49,10 +63,13 @@ namespace LogExtensions
                 await t;
 
                 stopwatch.Stop();
+
+                string finalMessage = GetMessage($$"{stopwatch.ElapsedMilliseconds} ms", message);
+
 #if USE_CONSOLEHELPER
-                ConsoleHelper.WriteLine($$"{stopwatch.ElapsedMilliseconds} ms", lineNumber, filePath, caller);
+                ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
-                Console.WriteLine($$"{stopwatch.ElapsedMilliseconds} ms");
+                Console.WriteLine(finalMessage, message);
 #endif
             });
         }
@@ -68,6 +85,21 @@ namespace LogExtensions
         /// <returns></returns>
         public static Task<T> LogExecutionTime<T>(this Task<T> task, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
         {
+            return LogExecutionTime(task, String.Empty, lineNumber, filePath, caller);
+        }
+
+        /// <summary>
+        /// Prints to console the execution time for a task.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="task"></param>
+        /// <param name="message"></param>
+        /// <param name="lineNumber"></param>
+        /// <param name="filePath"></param>
+        /// <param name="caller"></param>
+        /// <returns></returns>
+        public static Task<T> LogExecutionTime<T>(this Task<T> task, string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -76,10 +108,13 @@ namespace LogExtensions
                 T result = await t;
 
                 stopwatch.Stop();
+
+                string finalMessage = GetMessage($$"{stopwatch.ElapsedMilliseconds} ms", message);
+
 #if USE_CONSOLEHELPER
-                ConsoleHelper.WriteLine($$"{stopwatch.ElapsedMilliseconds} ms", lineNumber, filePath, caller);
+                ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
-                Console.WriteLine($$"{stopwatch.ElapsedMilliseconds} ms");
+                Console.WriteLine(finalMessage, message);
 #endif
 
                 return result;
@@ -95,12 +130,27 @@ namespace LogExtensions
         /// <param name="caller"></param>
         public static void LogInitializedTime(this FrameworkElement element, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
         {
+            LogInitializedTime(element, String.Empty, lineNumber, filePath, caller);
+        }
+
+        /// <summary>
+        /// Prints to console the execution time of a <see cref="FrameworkElement"/> <see cref="FrameworkElement.Initialized"/> event.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="message"></param>
+        /// <param name="lineNumber"></param>
+        /// <param name="filePath"></param>
+        /// <param name="caller"></param>
+        public static void LogInitializedTime(this FrameworkElement element, string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
             if (element.IsInitialized)
             {
+                string finalMessage = GetMessage("Already initialized", message);
+
 #if USE_CONSOLEHELPER
-                ConsoleHelper.WriteLine($$"Already initialized", lineNumber, filePath, caller);
+                ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
-                Console.WriteLine("Already initialized");
+                Console.WriteLine(finalMessage, message);
 #endif
                 return;
             }
@@ -111,10 +161,13 @@ namespace LogExtensions
             element.Initialized += (s, e) =>
             {
                 stopwatch.Stop();
+
+                string finalMessage = GetMessage($$"Initialized: {stopwatch.ElapsedMilliseconds} ms", message);
+
 #if USE_CONSOLEHELPER
-                ConsoleHelper.WriteLine($$"Initialized: {stopwatch.ElapsedMilliseconds} ms", lineNumber, filePath, caller);
+                ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
-                Console.WriteLine($$"Initialized: {stopwatch.ElapsedMilliseconds} ms");
+                Console.WriteLine(finalMessage, message);
 #endif
             };
         }
@@ -128,12 +181,27 @@ namespace LogExtensions
         /// <param name="caller"></param>
         public static void LogLoadedTime(this FrameworkElement element, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
         {
+            LogLoadedTime(element, String.Empty, lineNumber, filePath, caller);
+        }
+
+        /// <summary>
+        /// Prints to console the execution time of a <see cref="FrameworkElement"/> <see cref="FrameworkElement.Loaded"/> event.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="message"></param>
+        /// <param name="lineNumber"></param>
+        /// <param name="filePath"></param>
+        /// <param name="caller"></param>
+        public static void LogLoadedTime(this FrameworkElement element, string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
             if (element.IsLoaded)
             {
+                string finalMessage = GetMessage("Already loaded", message);
+
 #if USE_CONSOLEHELPER
-                ConsoleHelper.WriteLine("Already loaded", lineNumber, filePath, caller);
+                ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
-                Console.WriteLine("Already loaded");
+                Console.WriteLine(finalMessage, message);
 #endif
                 return;
             }
@@ -144,12 +212,28 @@ namespace LogExtensions
             element.Loaded += (s, e) =>
             {
                 stopwatch.Stop();
+
+                string finalMessage = GetMessage($$"Loaded: {stopwatch.ElapsedMilliseconds} ms", message);
+
 #if USE_CONSOLEHELPER
-                ConsoleHelper.WriteLine($$"Loaded: {stopwatch.ElapsedMilliseconds} ms", lineNumber, filePath, caller);
+                ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
-                Console.WriteLine($$"Loaded: {stopwatch.ElapsedMilliseconds} ms");
+                Console.WriteLine(finalMessage, message);
 #endif
             };
+        }
+
+        /// <summary>
+        /// Gets a log message using mandatory and optional messages.
+        /// </summary>
+        /// <param name="mandatoryMessage"></param>
+        /// <param name="optionalMessage"></param>
+        /// <returns></returns>
+        private static string GetMessage(string mandatoryMessage, string optionalMessage)
+        {
+            return String.IsNullOrEmpty(optionalMessage) ?
+                mandatoryMessage :
+                $$"{mandatoryMessage} - {optionalMessage}";
         }
     }
 }
