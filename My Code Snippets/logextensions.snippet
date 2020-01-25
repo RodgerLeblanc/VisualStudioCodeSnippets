@@ -262,7 +262,7 @@ namespace LogExtensions
             string finalMessage = GetMessage($$"{stopwatch.ElapsedMilliseconds} ms", message);
 
 #if USE_CONSOLEHELPER
-            ConsoleHelper2.WriteLine(finalMessage, lineNumber, filePath, caller);
+            ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
             Console.WriteLine(finalMessage, message);
 #endif
@@ -304,7 +304,7 @@ namespace LogExtensions
             string finalMessage = GetMessage($$"{stopwatch.ElapsedMilliseconds} ms", message);
 
 #if USE_CONSOLEHELPER
-            ConsoleHelper2.WriteLine(finalMessage, lineNumber, filePath, caller);
+            ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
             Console.WriteLine(finalMessage, message);
 #endif
