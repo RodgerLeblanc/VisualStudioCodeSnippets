@@ -13,6 +13,7 @@
 		<Snippet>
 			<Code Language="csharp"><![CDATA[//Uncomment this if using ConsoleHelper
 //#define USE_CONSOLEHELPER
+#define IS_WPF
 
 using System;
 
@@ -24,7 +25,9 @@ namespace LogExtensions
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
+#if IS_WPF
     using System.Windows;
+#endif
 
     /// <summary>
     /// LogExtensions
@@ -121,6 +124,7 @@ namespace LogExtensions
             }).Unwrap();
         }
 
+#if IS_WPF
         /// <summary>
         /// Prints to console the execution time of a <see cref="FrameworkElement"/> <see cref="FrameworkElement.Initialized"/> event.
         /// </summary>
@@ -221,6 +225,91 @@ namespace LogExtensions
                 Console.WriteLine(finalMessage, message);
 #endif
             };
+        }
+#endif
+
+        /// <summary>
+        /// Prints to console the execution time for an <see cref="Action"/>.
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="lineNumber"></param>
+        /// <param name="filePath"></param>
+        /// <param name="caller"></param>
+        /// <returns></returns>
+        public static void LogExecutionTime(Action action, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            LogExecutionTime(action, String.Empty, lineNumber, filePath, caller);
+        }
+
+        /// <summary>
+        /// Prints to console the execution time for an <see cref="Action"/>.
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="message"></param>
+        /// <param name="lineNumber"></param>
+        /// <param name="filePath"></param>
+        /// <param name="caller"></param>
+        /// <returns></returns>
+        public static void LogExecutionTime(Action action, string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            action?.Invoke();
+
+            stopwatch.Stop();
+
+            string finalMessage = GetMessage($$"{stopwatch.ElapsedMilliseconds} ms", message);
+
+#if USE_CONSOLEHELPER
+            ConsoleHelper2.WriteLine(finalMessage, lineNumber, filePath, caller);
+#else
+            Console.WriteLine(finalMessage, message);
+#endif
+        }
+
+        /// <summary>
+        /// Prints to console the execution time for a <see cref="Func{TResult}"/>.
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="lineNumber"></param>
+        /// <param name="filePath"></param>
+        /// <param name="caller"></param>
+        /// <returns></returns>
+        public static TResult LogExecutionTime<TResult>(Func<TResult> action, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            return LogExecutionTime(action, String.Empty, lineNumber, filePath, caller);
+        }
+
+        /// <summary>
+        /// Prints to console the execution time for a <see cref="Func{TResult}"/>.
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="message"></param>
+        /// <param name="lineNumber"></param>
+        /// <param name="filePath"></param>
+        /// <param name="caller"></param>
+        /// <returns></returns>
+        public static TResult LogExecutionTime<TResult>(Func<TResult> action, string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            TResult result = action == null ?
+                default :
+                action.Invoke();
+
+            stopwatch.Stop();
+
+            string finalMessage = GetMessage($$"{stopwatch.ElapsedMilliseconds} ms", message);
+
+#if USE_CONSOLEHELPER
+            ConsoleHelper2.WriteLine(finalMessage, lineNumber, filePath, caller);
+#else
+            Console.WriteLine(finalMessage, message);
+#endif
+
+            return result;
         }
 
         /// <summary>
