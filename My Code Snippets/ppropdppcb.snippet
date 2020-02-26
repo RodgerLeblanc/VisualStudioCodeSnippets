@@ -2,9 +2,9 @@
 <CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
     <CodeSnippet Format="1.0.0">
         <Header>
-            <Title>Define a BindableProperty</Title>
-            <Shortcut>propbp</Shortcut>
-            <Description>Code snippet for a property using BindableProperty as the backing store</Description>
+            <Title>Define a DependencyProperty with property changed callback using Bindables.DependencyPropertyAttribute</Title>
+            <Shortcut>ppropdppcb</Shortcut>
+            <Description>Code snippet for a property using DependencyProperty as the backing store</Description>
             <Author>Roger Leblanc</Author>
             <SnippetTypes>
                 <SnippetType>Expansion</SnippetType>
@@ -35,22 +35,33 @@
                 </Literal>
             </Declarations>
             <Code Language="csharp">
-                <![CDATA[#region $property$
-/// <summary>
-/// $property$ bindable property.
+                <![CDATA[/// <summary>
+/// Gets or sets the value for $property$. This is a dependency property.
 /// </summary>
-public static readonly BindableProperty $property$Property =
-    BindableProperty.Create(nameof($property$), typeof($type$), typeof($ownerclass$), null);
+[DependencyProperty(OnPropertyChanged = nameof(On$property$Changed))]
+public $type$ $property$ { get; set; }
 
 /// <summary>
-/// Gets or sets the value for $property$. This is a bindable property.
+/// $property$ property changed static callback
 /// </summary>
-public $type$ $property$
+/// <param name="d"></param>
+/// <param name="e"></param>
+private static void On$property$Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
 {
-    get { return ($type$)GetValue($property$Property); }
-    set { SetValue($property$Property, value); }
+    if (!(d is $ownerclass$ source))
+        return;
+
+    source.On$property$Changed(($type$)e.OldValue, ($type$)e.NewValue);
 }
-#endregion$end$]]>
+
+/// <summary>
+/// $property$ property changed callback
+/// </summary>
+/// <param name="oldValue"></param>
+/// <param name="newValue"></param>
+protected virtual void On$property$Changed($type$ oldValue, $type$ newValue)
+{
+}$end$]]>
             </Code>
         </Snippet>
     </CodeSnippet>

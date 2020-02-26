@@ -2,9 +2,9 @@
 <CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
     <CodeSnippet Format="1.0.0">
         <Header>
-            <Title>Define an Attached DependencyProperty</Title>
-            <Shortcut>propa</Shortcut>
-            <Description>Code snippet for an Attached DependencyProperty</Description>
+            <Title>Define a read-only DependencyProperty</Title>
+            <Shortcut>ppropdpr</Shortcut>
+            <Description>Code snippet for a read-only DependencyProperty</Description>
             <Author>Roger Leblanc</Author>
             <SnippetTypes>
                 <SnippetType>Expansion</SnippetType>
@@ -33,40 +33,28 @@
                     <ToolTip>The default value for this property.</ToolTip>
                     <Default>null</Default>
                 </Literal>
-                <Literal>
-                    <ID>objectType</ID>
-                    <ToolTip>The object that this attached property can attach to.</ToolTip>
-                    <Default>DependencyObject</Default>
-                </Literal>
             </Declarations>
             <Code Language="csharp">
-                <![CDATA[#region $property$
+                <![CDATA[/// <summary>
+/// Private key for $property$ dependency property.
+/// </summary>
+private static readonly DependencyPropertyKey $property$Key =
+    DependencyProperty.RegisterReadOnly(nameof($property$), typeof($type$), typeof($ownerclass$), new PropertyMetadata($defaultvalue$));
+
 /// <summary>
-/// $property$ attached property.
+/// $property$ read-only dependency property.
 /// </summary>
 public static readonly DependencyProperty $property$Property =
-    DependencyProperty.RegisterAttached("$property$", typeof($type$), typeof($ownerclass$), new PropertyMetadata($defaultvalue$));
+    $property$Key.DependencyProperty;
 
 /// <summary>
-/// Gets the $property$ value.
+/// Gets the value for $property$. This is a read-only dependency property.
 /// </summary>
-/// <param name="obj"></param>
-/// <returns></returns>
-public static $type$ Get$property$($objectType$ obj)
+public $type$ $property$
 {
-    return ($type$)obj.GetValue($property$Property);
-}
-
-/// <summary>
-/// Sets the $property$ value.
-/// </summary>
-/// <param name="obj"></param>
-/// <param name="value"></param>
-public static void Set$property$($objectType$ obj, $type$ value)
-{
-    obj.SetValue($property$Property, value);
-}
-#endregion$end$]]>
+    get { return ($type$)GetValue($property$Property); }
+    protected set { SetValue($property$Key, value); }
+}$end$]]>
             </Code>
         </Snippet>
     </CodeSnippet>

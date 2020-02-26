@@ -2,10 +2,9 @@
 <CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
 	<CodeSnippet Format="1.0.0">
 		<Header>
-			<Title>Define a Property</Title>
-			<Shortcut>prop</Shortcut>
-			<Description>Code snippet for an automatically implemented property
-Language Version: C# 3.0 or higher</Description>
+			<Title>Define a constructor</Title>
+			<Shortcut>cctor</Shortcut>
+			<Description>Code snippet for constructor</Description>
 			<Author>Roger Leblanc</Author>
 			<SnippetTypes>
 				<SnippetType>Expansion</SnippetType>
@@ -13,21 +12,20 @@ Language Version: C# 3.0 or higher</Description>
 		</Header>
 		<Snippet>
 			<Declarations>
-				<Literal>
-					<ID>type</ID>
-					<ToolTip>Property type</ToolTip>
-					<Default>object</Default>
-				</Literal>
-				<Literal>
-					<ID>property</ID>
-					<ToolTip>Property name</ToolTip>
-					<Default>MyProperty</Default>
+				<Literal Editable="false">
+					<ID>classname</ID>
+					<ToolTip>Class name</ToolTip>
+					<Function>ClassName()</Function>
+					<Default>ClassNamePlaceholder</Default>
 				</Literal>
 			</Declarations>
 			<Code Language="csharp"><![CDATA[/// <summary>
-/// $property$
+/// Constructor
 /// </summary>
-public $type$ $property$ { get; set; }$end$]]>
+public $classname$()
+{
+	$end$
+}]]>
 			</Code>
 		</Snippet>
 	</CodeSnippet>

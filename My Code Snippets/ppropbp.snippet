@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
     <CodeSnippet Format="1.0.0">
         <Header>
-            <Title>Define a read-only DependencyProperty</Title>
-            <Shortcut>propdpr</Shortcut>
-            <Description>Code snippet for a read-only DependencyProperty</Description>
+            <Title>Define a BindableProperty</Title>
+            <Shortcut>ppropbp</Shortcut>
+            <Description>Code snippet for a property using BindableProperty as the backing store</Description>
             <Author>Roger Leblanc</Author>
             <SnippetTypes>
                 <SnippetType>Expansion</SnippetType>
@@ -25,7 +25,7 @@
                 <Literal Editable="false">
                     <ID>ownerclass</ID>
                     <ToolTip>The owning class of this Property.  Typically the class that it is declared in.</ToolTip>
-                    <Function>ClassName()</Function>   
+                    <Function>ClassName()</Function>
                     <Default>ClassNamePlaceholder</Default>
                 </Literal>
                 <Literal>
@@ -35,26 +35,22 @@
                 </Literal>
             </Declarations>
             <Code Language="csharp">
-                <![CDATA[/// <summary>
-/// Private key for $property$ dependency property.
+                <![CDATA[#region $property$
+/// <summary>
+/// $property$ bindable property.
 /// </summary>
-private static readonly DependencyPropertyKey $property$Key =
-    DependencyProperty.RegisterReadOnly(nameof($property$), typeof($type$), typeof($ownerclass$), new PropertyMetadata($defaultvalue$));
+public static readonly BindableProperty $property$Property =
+    BindableProperty.Create(nameof($property$), typeof($type$), typeof($ownerclass$), null);
 
 /// <summary>
-/// $property$ read-only dependency property.
-/// </summary>
-public static readonly DependencyProperty $property$Property =
-    $property$Key.DependencyProperty;
-
-/// <summary>
-/// Gets the value for $property$. This is a read-only dependency property.
+/// Gets or sets the value for $property$. This is a bindable property.
 /// </summary>
 public $type$ $property$
 {
     get { return ($type$)GetValue($property$Property); }
-    protected set { SetValue($property$Key, value); }
-}$end$]]>
+    set { SetValue($property$Property, value); }
+}
+#endregion$end$]]>
             </Code>
         </Snippet>
     </CodeSnippet>
