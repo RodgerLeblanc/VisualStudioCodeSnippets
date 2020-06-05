@@ -1,4 +1,2 @@
 # VisualStudioCodeSnippets
 Provides WPF and Xamarin code snippets for Visual Studio. After installing this repository on your machine, open Visual Studio, click `Tools > Code Snippets Manager...` and add your repository folder to the list of code snippets. Alternatively, you can install this repository inside My Code Snippets folder that comes by default with Visual Studio.
-
-Some snippets will appear twice in IntelliSense as they are already declared somewhere else, you can get rid of the default one by going to Code Snippets Manager and removing the ones you don't want to see. For instance, the `ctor` snippet is declared in this repository and in `C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC#\Snippets\1033\Visual C#`, you can remove the one you don't want to use in the appropriate folder. Note that the default snippets might be reinstalled when doing a major update to Visual Studio.
