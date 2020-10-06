@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Define a LogExtensions class</Title>
+			<Shortcut>logextensions</Shortcut>
+			<Description>Code snippet for a LogExtensions class</Description>
+			<Author>Roger Leblanc</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Code Language="csharp"><![CDATA[//Uncomment this if using ConsoleHelper
+//#define USE_CONSOLEHELPER
+#define IS_WPF
+
+using System;
+
+namespace LogExtensions
+{
+#if USE_CONSOLEHELPER
+    using ConsoleHelpers;
+#endif
+    using System.Diagnostics;
+    using System.Runtime.CompilerServices;
+    using System.Threading.Tasks;
+#if IS_WPF
+    using System.Windows;
+#endif
+
+    public static class LogExtensions
+    {
+        public static Task LogExecutionTime(this Task task, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            return LogExecutionTime(task, String.Empty, lineNumber, filePath, caller);
+        }
+
+        public static Task LogExecutionTime(this Task task, string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            return task.ContinueWith(async t =>
+            {
+                await t;
+
+                stopwatch.Stop();
+
+                string finalMessage = GetMessage($$"{stopwatch.ElapsedMilliseconds} ms", message);
+
+#if USE_CONSOLEHELPER
+                ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
+#else
+                Trace.WriteLine(finalMessage, message);
+#endif
+            });
+        }
+
+        public static Task<T> LogExecutionTime<T>(this Task<T> task, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            return LogExecutionTime(task, String.Empty, lineNumber, filePath, caller);
+        }
+
+        public static Task<T> LogExecutionTime<T>(this Task<T> task, string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            return task.ContinueWith(async t =>
+            {
+                T result = await t;
+
+                stopwatch.Stop();
+
+                string finalMessage = GetMessage($$"{stopwatch.ElapsedMilliseconds} ms", message);
+
+#if USE_CONSOLEHELPER
+                ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
+#else
+                Trace.WriteLine(finalMessage, message);
+#endif
+
+                return result;
+            }).Unwrap();
+        }
+
+#if IS_WPF
+        public static void LogInitializedTime(this FrameworkElement element, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            LogInitializedTime(element, String.Empty, lineNumber, filePath, caller);
+        }
+
+        public static void LogInitializedTime(this FrameworkElement element, string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            if (element.IsInitialized)
+            {
+                string finalMessage = GetMessage("Already initialized", message);
+
+#if USE_CONSOLEHELPER
+                ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
+#else
+                Trace.WriteLine(finalMessage, message);
+#endif
+                return;
+            }
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            element.Initialized += (s, e) =>
+            {
+                stopwatch.Stop();
+
+                string finalMessage = GetMessage($$"Initialized: {stopwatch.ElapsedMilliseconds} ms", message);
+
+#if USE_CONSOLEHELPER
+                ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
+#else
+                Trace.WriteLine(finalMessage, message);
+#endif
+            };
+        }
+
+        public static void LogLoadedTime(this FrameworkElement element, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            LogLoadedTime(element, String.Empty, lineNumber, filePath, caller);
+        }
+
+        public static void LogLoadedTime(this FrameworkElement element, string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            if (element.IsLoaded)
+            {
+                string finalMessage = GetMessage("Already loaded", message);
+
+#if USE_CONSOLEHELPER
+                ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
+#else
+                Trace.WriteLine(finalMessage, message);
+#endif
+                return;
+            }
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            element.Loaded += (s, e) =>
+            {
+                stopwatch.Stop();
+
+                string finalMessage = GetMessage($$"Loaded: {stopwatch.ElapsedMilliseconds} ms", message);
+
+#if USE_CONSOLEHELPER
+                ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
+#else
+                Trace.WriteLine(finalMessage, message);
+#endif
+            };
+        }
+#endif
+
+        public static void LogExecutionTime(Action action, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            LogExecutionTime(action, String.Empty, lineNumber, filePath, caller);
+        }
+
+        public static void LogExecutionTime(Action action, string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            action?.Invoke();
+
+            stopwatch.Stop();
+
+            string finalMessage = GetMessage($$"{stopwatch.ElapsedMilliseconds} ms", message);
+
+#if USE_CONSOLEHELPER
+            ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
+#else
+            Trace.WriteLine(finalMessage, message);
+#endif
+        }
+
+        public static TResult LogExecutionTime<TResult>(Func<TResult> action, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            return LogExecutionTime(action, String.Empty, lineNumber, filePath, caller);
+        }
+
+        public static TResult LogExecutionTime<TResult>(Func<TResult> action, string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            TResult result = action == null ?
+                default :
+                action.Invoke();
+
+            stopwatch.Stop();
+
+            string finalMessage = GetMessage($$"{stopwatch.ElapsedMilliseconds} ms", message);
+
+#if USE_CONSOLEHELPER
+            ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
+#else
+            Trace.WriteLine(finalMessage, message);
+#endif
+
+            return result;
+        }
+
+        private static string GetMessage(string mandatoryMessage, string optionalMessage)
+        {
+            return String.IsNullOrEmpty(optionalMessage) ?
+                mandatoryMessage :
+                $$"{mandatoryMessage} - {optionalMessage}";
+        }
+    }
+}
+$end$]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
