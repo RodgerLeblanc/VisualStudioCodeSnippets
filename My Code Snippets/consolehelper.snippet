@@ -11,8 +11,11 @@
 			</SnippetTypes>
 		</Header>
 		<Snippet>
-			<Code Language="csharp"><![CDATA[using System;
-    using System.Linq;
+			<Code Language="csharp"><![CDATA[namespace ConsoleHelpers
+{
+    using System;
+    using System.Diagnostics;
+    using System.IO;
     using System.Runtime.CompilerServices;
 
     public static class ConsoleHelper
@@ -26,9 +29,10 @@
 
         public static void WriteLine(string message, [CallerLineNumber] int lineNumber = Int32.MinValue, [CallerFilePath] string filePath = "", [CallerMemberName] string caller = "")
         {
-            Console.WriteLine($$"{DateTime.Now.ToString(DateTimeFormat)} {filePath.Split('\\').Last()} #{lineNumber} - {caller}() : {message}");
+            Trace.WriteLine($$"{DateTime.Now.ToString(DateTimeFormat)} {Path.GetFileName(filePath)} #{lineNumber} - {caller}() : {message}");
         }
-    }$end$]]>
+    }
+}$end$]]>
 			</Code>
 		</Snippet>
 	</CodeSnippet>
