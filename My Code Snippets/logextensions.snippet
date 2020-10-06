@@ -72,7 +72,7 @@ namespace LogExtensions
 #if USE_CONSOLEHELPER
                 ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
-                Console.WriteLine(finalMessage, message);
+                Trace.WriteLine(finalMessage, message);
 #endif
             });
         }
@@ -117,7 +117,7 @@ namespace LogExtensions
 #if USE_CONSOLEHELPER
                 ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
-                Console.WriteLine(finalMessage, message);
+                Trace.WriteLine(finalMessage, message);
 #endif
 
                 return result;
@@ -154,7 +154,7 @@ namespace LogExtensions
 #if USE_CONSOLEHELPER
                 ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
-                Console.WriteLine(finalMessage, message);
+                Trace.WriteLine(finalMessage, message);
 #endif
                 return;
             }
@@ -171,7 +171,7 @@ namespace LogExtensions
 #if USE_CONSOLEHELPER
                 ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
-                Console.WriteLine(finalMessage, message);
+                Trace.WriteLine(finalMessage, message);
 #endif
             };
         }
@@ -205,7 +205,7 @@ namespace LogExtensions
 #if USE_CONSOLEHELPER
                 ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
-                Console.WriteLine(finalMessage, message);
+                Trace.WriteLine(finalMessage, message);
 #endif
                 return;
             }
@@ -222,7 +222,7 @@ namespace LogExtensions
 #if USE_CONSOLEHELPER
                 ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
-                Console.WriteLine(finalMessage, message);
+                Trace.WriteLine(finalMessage, message);
 #endif
             };
         }
@@ -264,7 +264,7 @@ namespace LogExtensions
 #if USE_CONSOLEHELPER
             ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
-            Console.WriteLine(finalMessage, message);
+            Trace.WriteLine(finalMessage, message);
 #endif
         }
 
@@ -306,7 +306,7 @@ namespace LogExtensions
 #if USE_CONSOLEHELPER
             ConsoleHelper.WriteLine(finalMessage, lineNumber, filePath, caller);
 #else
-            Console.WriteLine(finalMessage, message);
+            Trace.WriteLine(finalMessage, message);
 #endif
 
             return result;
