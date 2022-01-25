@@ -11,7 +11,15 @@
 			</SnippetTypes>
 		</Header>
 		<Snippet>
-			<Code Language="TypeScript"><![CDATA[// tslint:disable: no-console$end$]]></Code>
+			<Declarations>
+				<Literal>
+					<ID>message</ID>
+					<ToolTip>Message to log</ToolTip>
+					<Default></Default>
+				</Literal>
+			</Declarations>
+			<Code Language="TypeScript"><![CDATA[// tslint:disable: no-console
+console.log('$message$');$end$]]></Code>
 		</Snippet>
 	</CodeSnippet>
 </CodeSnippets>
