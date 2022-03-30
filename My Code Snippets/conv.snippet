@@ -55,19 +55,8 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-/// <summary>
-/// $converterName$Converter
-/// </summary>
 public class $converterName$Converter : MarkupExtension, IValueConverter
 {
-    /// <summary>
-    /// Convert from $sourceType$ to $targetType$.
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="targetType"></param>
-    /// <param name="parameter"></param>
-    /// <param name="culture"></param>
-    /// <returns></returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (!(value is $sourceType$ source))
@@ -76,14 +65,6 @@ public class $converterName$Converter : MarkupExtension, IValueConverter
         return source as $targetType$;
     }
 
-    /// <summary>
-    /// Convert from $targetType$ to $sourceType$.
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="targetType"></param>
-    /// <param name="parameter"></param>
-    /// <param name="culture"></param>
-    /// <returns></returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (!(value is $targetType$ source))
@@ -92,11 +73,6 @@ public class $converterName$Converter : MarkupExtension, IValueConverter
         return source as $sourceType$;
     }
 
-    /// <summary>
-    /// Returns an object that is provided as the value of the target property for this markup extension.
-    /// </summary>
-    /// <param name="serviceProvider"></param>
-    /// <returns></returns>
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
         return this;
