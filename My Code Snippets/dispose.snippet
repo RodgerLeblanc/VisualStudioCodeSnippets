@@ -15,19 +15,12 @@
                 <![CDATA[#region IDisposable implementation
 private bool disposed = false;
 
-/// <summary>
-/// Public implementation of Dispose pattern callable by consumers.
-/// </summary>
 public void Dispose()
 {
     Dispose(true);
     GC.SuppressFinalize(this);
 }
 
-/// <summary>
-/// Protected implementation of Dispose pattern.
-/// </summary>
-/// <param name="disposing"></param>
 protected virtual void Dispose(bool disposing)
 {
     if (disposed)

@@ -35,21 +35,12 @@
                 </Literal>
             </Declarations>
             <Code Language="csharp">
-                <![CDATA[/// <summary>
-/// Private key for $property$ dependency property.
-/// </summary>
-private static readonly DependencyPropertyKey $property$Key =
+                <![CDATA[private static readonly DependencyPropertyKey $property$Key =
     DependencyProperty.RegisterReadOnly(nameof($property$), typeof($type$), typeof($ownerclass$), new PropertyMetadata($defaultvalue$));
 
-/// <summary>
-/// $property$ read-only dependency property.
-/// </summary>
 public static readonly DependencyProperty $property$Property =
     $property$Key.DependencyProperty;
 
-/// <summary>
-/// Gets the value for $property$. This is a read-only dependency property.
-/// </summary>
 public $type$ $property$
 {
     get { return ($type$)GetValue($property$Property); }
