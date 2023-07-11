@@ -13,7 +13,6 @@
 		<Snippet>
 			<Code Language="csharp"><![CDATA[//Uncomment this if using ConsoleHelper
 //#define USE_CONSOLEHELPER
-#define IS_WPF
 
 using System;
 
@@ -25,7 +24,7 @@ namespace LogExtensions
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
-#if IS_WPF
+#if WINDOWS
     using System.Windows;
 #endif
 
@@ -124,7 +123,7 @@ namespace LogExtensions
             }).Unwrap();
         }
 
-#if IS_WPF
+#if WINDOWS
         /// <summary>
         /// Prints to console the execution time of a <see cref="FrameworkElement"/> <see cref="FrameworkElement.Initialized"/> event.
         /// </summary>
