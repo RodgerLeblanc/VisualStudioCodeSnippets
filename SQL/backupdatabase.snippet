@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<_locDefinition xmlns="urn:locstudio">
+		<_locDefault _loc="locNone" />
+		<_locTag _loc="locData">Title</_locTag>
+		<_locTag _loc="locData">Description</_locTag>
+		<_locTag _loc="locData">Author</_locTag>
+		<_locTag _loc="locData">ToolTip</_locTag>
+	</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Backup database</Title>
+			<Shortcut>backupdatabase</Shortcut>
+			<Description>Backups a database to a file.</Description>
+			<Author>Roger Leblanc</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>DatabaseName</ID>
+					<ToolTip>Name of the database</ToolTip>
+					<Default></Default>
+				</Literal>
+				<Literal>
+					<ID>BackupPath</ID>
+					<ToolTip>Path for the backup file</ToolTip>
+					<Default>C:\Backups\latest.bak</Default>
+				</Literal>
+			</Declarations>
+		<Code Language="SQL"> <![CDATA[
+DECLARE @DatabaseName VARCHAR(255) = '$DatabaseName$'
+DECLARE @BackupPath VARCHAR(255) = '$BackupPath$'
+
+BACKUP DATABASE @DatabaseName TO DISK = @BackupPath 
+]]>
+		</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
+
