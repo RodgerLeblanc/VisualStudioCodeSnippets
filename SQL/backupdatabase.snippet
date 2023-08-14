@@ -33,8 +33,22 @@
 		<Code Language="SQL"> <![CDATA[
 DECLARE @DatabaseName VARCHAR(255) = '$DatabaseName$'
 DECLARE @BackupPath VARCHAR(255) = '$BackupPath$'
+DECLARE @BackupName VARCHAR(255) = @DatabaseName + '-Full Database Backup'
+DECLARE @BackupSetId AS int
 
-BACKUP DATABASE @DatabaseName TO DISK = @BackupPath 
+BACKUP DATABASE @DatabaseName TO  DISK = @BackupPath WITH  COPY_ONLY, NOFORMAT, INIT,  NAME = @BackupName, SKIP, NOREWIND, NOUNLOAD
+
+SELECT @BackupSetId = position
+FROM msdb..backupset
+WHERE database_name = @DatabaseName AND backup_set_id=(select max(backup_set_id) from msdb..backupset WHERE database_name = @DatabaseName)
+
+IF @BackupSetId IS NULL
+BEGIN
+    RAISERROR(N'Verify failed. Backup information for database ''@DatabaseName'' not found.', 16, 1)
+END
+
+RESTORE VERIFYONLY FROM  DISK = @BackupPath WITH  FILE = @BackupSetId,  NOUNLOAD,  NOREWIND
+GO
 ]]>
 		</Code>
 		</Snippet>
