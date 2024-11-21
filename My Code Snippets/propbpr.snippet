@@ -35,8 +35,7 @@
                 </Literal>
             </Declarations>
             <Code Language="csharp">
-                <![CDATA[#region $property$
-public static readonly BindablePropertyKey $property$PropertyKey =
+                <![CDATA[public static readonly BindablePropertyKey $property$PropertyKey =
     BindableProperty.CreateReadOnly(nameof($property$), typeof($type$), typeof($ownerclass$), defaultValue: $defaultvalue$);
 
 public static readonly BindableProperty $property$Property =
@@ -46,8 +45,7 @@ public $type$ $property$
 {
     get { return ($type$)GetValue($property$Property); }
     set { SetValue($property$PropertyKey, value); }
-}
-#endregion$end$]]>
+}$end$]]>
             </Code>
         </Snippet>
     </CodeSnippet>

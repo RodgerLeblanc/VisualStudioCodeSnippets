@@ -35,16 +35,14 @@
                 </Literal>
             </Declarations>
             <Code Language="csharp">
-                <![CDATA[#region $property$
-public static readonly BindableProperty $property$Property =
+                <![CDATA[public static readonly BindableProperty $property$Property =
     BindableProperty.Create(nameof($property$), typeof($type$), typeof($ownerclass$), defaultValue: $defaultvalue$);
 
 public $type$ $property$
 {
     get { return ($type$)GetValue($property$Property); }
     set { SetValue($property$Property, value); }
-}
-#endregion$end$]]>
+}$end$]]>
             </Code>
         </Snippet>
     </CodeSnippet>
